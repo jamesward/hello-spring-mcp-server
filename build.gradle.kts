@@ -9,6 +9,10 @@ plugins {
 group = "com.jamesward"
 version = "0.0.1-SNAPSHOT"
 
+kotlin {
+    jvmToolchain(21)
+}
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.ai:spring-ai-starter-mcp-server-webflux")
@@ -20,7 +24,32 @@ dependencyManagement {
     }
 }
 
-kotlin {
-    jvmToolchain(21)
+// disable the plain jar because it confuses Heroku
+tasks.named<Jar>("jar") {
+    enabled = false
 }
 
+
+//java {
+//    toolchain {
+//        languageVersion = JavaLanguageVersion.of(21)
+//        vendor = JvmVendorSpec.GRAAL_VM
+//        nativeImageCapable = true
+//    }
+//}
+//
+//graalvmNative {
+//    toolchainDetection = true
+//}
+
+//graalvmNative {
+//    binaries {
+//        named("main") {
+//            javaLauncher = javaToolchains.launcherFor {
+//                languageVersion = JavaLanguageVersion.of(23)
+//                vendor = JvmVendorSpec.GRAAL_VM
+//                nativeImageCapable = true
+//            }
+//        }
+//    }
+//}
