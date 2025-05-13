@@ -2,19 +2,31 @@ package com.jamesward.hellospringmcpserver
 
 import io.micrometer.core.instrument.MeterRegistry
 import io.micrometer.core.instrument.Statistic
+import kotlinx.html.dom.serialize
 import org.springframework.ai.tool.annotation.Tool
 import org.springframework.ai.tool.annotation.ToolParam
 import org.springframework.ai.tool.method.MethodToolCallbackProvider
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
+import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
+import org.springframework.web.reactive.function.server.ServerResponse
+import org.springframework.web.reactive.function.server.bodyValueAndAwait
+import org.springframework.web.reactive.function.server.coRouter
 
 @SpringBootApplication
 class Application {
     @Bean
     fun tools(myTools: MyTools): MethodToolCallbackProvider =
         MethodToolCallbackProvider.builder().toolObjects(myTools).build()
+
+    @Bean
+    fun http(mcps: MethodToolCallbackProvider) = coRouter {
+        GET("/") {
+            ServerResponse.ok().contentType(MediaType.TEXT_HTML).bodyValueAndAwait(Html(mcps.toolCallbacks).index.serialize(true))
+        }
+    }
 }
 
 @Service

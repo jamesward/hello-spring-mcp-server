@@ -16,11 +16,18 @@ kotlin {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.ai:spring-ai-starter-mcp-server-webflux")
+    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+    implementation("org.webjars:bootstrap:5.3.5")
+    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.12.0")
+    runtimeOnly("org.webjars:webjars-locator-lite:1.0.1")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.ai:spring-ai-bom:1.0.0-M8")
+        mavenBom("org.springframework.ai:spring-ai-bom:1.0.0-RC1")
     }
 }
 
