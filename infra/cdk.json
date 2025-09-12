@@ -1,0 +1,6 @@
+{
+  "app": "uv run --group deploy infra.py",
+  "watch": {
+    "include": ["infra/**"]
+  }
+}

@@ -1,62 +1,44 @@
 package com.jamesward.hellospringmcpserver
 
-import io.micrometer.core.instrument.MeterRegistry
-import io.micrometer.core.instrument.Statistic
-import kotlinx.html.dom.serialize
 import org.springframework.ai.tool.annotation.Tool
 import org.springframework.ai.tool.annotation.ToolParam
 import org.springframework.ai.tool.method.MethodToolCallbackProvider
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
-import org.springframework.http.MediaType
-import org.springframework.stereotype.Service
-import org.springframework.web.reactive.function.server.ServerResponse
-import org.springframework.web.reactive.function.server.bodyValueAndAwait
-import org.springframework.web.reactive.function.server.coRouter
+import org.springframework.stereotype.Component
 
 @SpringBootApplication
 class Application {
     @Bean
     fun tools(myTools: MyTools): MethodToolCallbackProvider =
         MethodToolCallbackProvider.builder().toolObjects(myTools).build()
-
-    @Bean
-    fun http(mcps: MethodToolCallbackProvider) = coRouter {
-        GET("/") {
-            ServerResponse.ok().contentType(MediaType.TEXT_HTML).bodyValueAndAwait(Html(mcps.toolCallbacks).index.serialize(true))
-        }
-    }
 }
 
-@Service
-class MyTools(val meterRegistry: MeterRegistry) {
+data class Employee(val name: String, val skills: List<String>)
 
-    @Tool(description = "get the number of open connections to this server")
-    fun numActiveConnections(): Double =
-        meterRegistry
-            .find("http.server.requests.active")
-            .tag("method", "GET") // just the /sse GET
-            .meter()
-            ?.measure()
-            ?.firstOrNull { it.statistic == Statistic.ACTIVE_TASKS }
-            ?.value ?: throw Exception("could not get number of connections")
+data class EmployeeSkills(val skills: Set<String>)
 
-    @Tool(description = "get the number of connections made since the server started")
-    fun numTotalConnections(@ToolParam(required = false, description = "HTTP Method to filter on") method: String?): Double = run {
-        val search = meterRegistry.find("http.server.requests")
+data class Employees(val employees: List<Employee>)
 
-        val searchWithMaybeTag = if (method != null) {
-            search.tag("method", method.uppercase())
-        } else {
-            search
-        }
+@Component
+class MyTools {
+    @Tool(description = "the list of all possible employee skills")
+    fun getSkills(): EmployeeSkills = run {
+        println("getSkills")
+        EmployeeSkills(
+            SampleData.employees.flatMap { it.skills }.toSet()
+        )
+    }
 
-        searchWithMaybeTag
-            .meter()
-            ?.measure()
-            ?.firstOrNull { it.statistic == Statistic.COUNT }
-            ?.value ?: throw Exception("could not get number of connections")
+    @Tool(description = "the employees that have a specific skill")
+    fun getEmployeesWithSkill(@ToolParam(description = "skill") skill: String): Employees = run {
+        println("getEmployeesWithSkill $skill")
+        Employees(
+            SampleData.employees.filter { employee ->
+                employee.skills.any { it.equals(skill, ignoreCase = true) }
+            }
+        )
     }
 }
 
