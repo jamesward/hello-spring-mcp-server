@@ -1,7 +1,7 @@
 plugins {
     kotlin("jvm") version "2.2.20"
     kotlin("plugin.spring") version "2.2.20"
-    id("org.springframework.boot") version "3.5.5"
+    id("org.springframework.boot") version "3.5.6"
     id("io.spring.dependency-management") version "1.1.7"
 }
 
@@ -22,7 +22,7 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.ai:spring-ai-bom:1.1.0-M1")
+        mavenBom("org.springframework.ai:spring-ai-bom:1.1.0-M2")
     }
 }
 
