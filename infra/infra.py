@@ -9,8 +9,6 @@ from constructs import Construct
 from buildpack_image_asset import BuildpackImageAsset
 from bedrock_agentcore_runtime import BedrockAgentCoreRuntime
 
-import httpx
-
 class BedrockAgentCoreStack(aws_cdk.Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs):
         super().__init__(scope, construct_id, **kwargs)

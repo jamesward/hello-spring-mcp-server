@@ -61,7 +61,8 @@ class BedrockAgentCoreRuntime(Construct):
                 effect=aws_iam.Effect.ALLOW,
                 actions=[
                     "bedrock-agentcore:*",
-                    "iam:PassRole"
+                    "iam:PassRole",
+                    "iam:CreateServiceLinkedRole",
                 ],
                 resources=["*"]
             )

@@ -4,7 +4,6 @@ dependencyResolutionManagement {
     @Suppress("UnstableApiUsage")
     repositories {
         mavenCentral()
-        maven("https://repo.spring.io/milestone")
     }
 }
 

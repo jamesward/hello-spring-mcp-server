@@ -19,6 +19,7 @@ docker run -it -p8000:8000 -ePORT=8000 hello-spring-mcp-server:0.0.1-SNAPSHOT
 1. Install node & uv
 1. Deploy the CDK stack:
     ```
+    cd infra
     npx aws-cdk bootstrap
     npx aws-cdk deploy
     ```
