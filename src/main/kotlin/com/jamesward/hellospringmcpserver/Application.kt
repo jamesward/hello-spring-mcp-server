@@ -13,6 +13,7 @@ data class Employees(val employees: List<Employee>)
 
 @SpringBootApplication
 class Application {
+
     @McpTool(description = "the list of all possible employee skills", generateOutputSchema = true)
     fun getSkills(): EmployeeSkills = run {
         println("getSkills")
