@@ -13,7 +13,7 @@ kotlin {
 }
 
 dependencies {
-    implementation(platform("org.springframework.ai:spring-ai-bom:1.1.7"))
+    implementation(platform("org.springframework.ai:spring-ai-bom:2.0.0"))
     implementation("org.springframework.ai:spring-ai-starter-mcp-server-webflux")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
