@@ -9,7 +9,7 @@ group = "com.jamesward"
 version = "0.0.1-SNAPSHOT"
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(25)
 }
 
 dependencies {
