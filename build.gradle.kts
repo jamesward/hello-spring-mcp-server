@@ -1,4 +1,5 @@
 plugins {
+    id("com.skillsjars.gradle-plugin") version "0.1.4"
     kotlin("jvm") version "2.4.20"
     kotlin("plugin.spring") version "2.4.20"
     id("org.springframework.boot") version "4.1.1"
@@ -24,4 +25,13 @@ dependencies {
 // disable the plain jar because it confuses Heroku
 tasks.named<Jar>("jar") {
     enabled = false
+}
+
+// Agent Skills, extracted with ./gradlew extractSkillsJars
+dependencies {
+    skill("com.jamesward:skills:0.0.10")
+}
+
+skillsjars {
+    outputDir.set(layout.projectDirectory.dir(".kiro/skills"))
 }

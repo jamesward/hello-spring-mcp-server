@@ -41,3 +41,6 @@ out/
 /infra/cdk.out/
 /infra/.venv/
 /infra/__pycache__/
+
+# Agent Skills extracted by the build
+/.kiro/skills/
