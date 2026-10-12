@@ -1,7 +1,7 @@
 plugins {
-    id("com.skillsjars.gradle-plugin") version "0.1.4"
-    kotlin("jvm") version "2.4.20"
-    kotlin("plugin.spring") version "2.4.20"
+    id("com.skillsjars.gradle-plugin") version "0.2.0"
+    kotlin("jvm") version "2.4.21"
+    kotlin("plugin.spring") version "2.4.21"
     id("org.springframework.boot") version "4.1.1"
     id("io.spring.dependency-management") version "1.1.7"
 }
@@ -11,6 +11,9 @@ version = "0.0.1-SNAPSHOT"
 
 kotlin {
     jvmToolchain(25)
+    compilerOptions {
+        allWarningsAsErrors = true
+    }
 }
 
 dependencies {
@@ -29,7 +32,7 @@ tasks.named<Jar>("jar") {
 
 // Agent Skills, extracted with ./gradlew extractSkillsJars
 dependencies {
-    skill("com.jamesward:skills:0.0.10")
+    skill("com.jamesward:skills:0.0.13")
 }
 
 skillsjars {
