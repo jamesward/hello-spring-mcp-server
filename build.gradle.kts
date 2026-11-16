@@ -32,7 +32,7 @@ tasks.named<Jar>("jar") {
 
 // Agent Skills, extracted with ./gradlew extractSkillsJars
 dependencies {
-    skill("com.jamesward:skills:0.0.24")
+    skill("com.jamesward:skills:0.0.27")
 }
 
 skillsjars {
